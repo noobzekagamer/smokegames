@@ -1,0 +1,20 @@
+if (existingUser) {
+  alert('Usuário já exists!');
+  return;
+}
+
+const salt = bcrypt.genSaltSync(10);
+const hashedPassword = bcrypt.hashSync(password, salt);
+
+await room.collection('user').create({
+  displayName: displayName.trim(),
+  username: room.party.client.username,
+  passwordHash: hashedPassword,
+  favoriteGame: e.target.elements['favorite-game'].value,
+  createdAt: new Date().toISOString(),
+  avatarUrl: `https://images.websim.ai/avatar/${room.party.client.username}`
+});
+
+setDisplayName('');
+setPassword('');
+window.location.reload();
